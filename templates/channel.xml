@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/static/feed.xsl"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+	<channel>
+		<link>http://postnauka.ru</link>
+		<language>ru-ru</language>
+		<copyright>&#xA9; ИД &#171;ПостНаука&#187;</copyright>
+		<webMaster>bogdan.vasiliev@gmail.com</webMaster>
+		<managingEditor>postnauka@postnauka.ru</managingEditor>
+		<image>
+			<url>{{site_root + feed.logo_url}}</url>
+			<title>{{feed.title}} на ПостНауке</title>
+			<link>http://postnauka.ru</link>
+		</image>
+		<itunes:owner>
+			<itunes:name>Подкасты проекта &#171;ПостНаука&#187;</itunes:name>
+			<itunes:email>postnauka@postnauka.ru</itunes:email>
+		</itunes:owner>
+		<itunes:category text="Science &amp; Medicine">
+		</itunes:category>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:image href="{{site_root + feed.logo_url}}"/>
+		<atom:link href="{{site_root + request.path}}" rel="self" type="application/rss+xml"/>
+		<pubDate>{{feed.date}}</pubDate>
+		<title>{{feed.title}} на ПостНауке</title>
+		<itunes:author>ИД &#171;ПостНаука&#187;</itunes:author>
+		<itunes:summary>{{feed.summary}}</itunes:summary>
+		<description>{{feed.description}}</description>
+		<itunes:subtitle>Короткие лекции, монологи ученых по теме их исследований. Научные теории, понятия, идеи и факты.</itunes:subtitle>
+		<lastBuildDate>{{feed.date}}</lastBuildDate>
+		{% block items %}{% endblock %}
+	</channel>
+</rss>

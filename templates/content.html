@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+ <div class="content" id="page-content">
+  <div class="container" id="top">
+   <p><span title="Мы &mdash; автор и Python">Мы</span> превращаем видео проекта <a href="http://postnauka.ru">&#171;ПостНаука&#187;</a> в удобные подкасты: вот <a href="/last/rss.xml">поток всех последних лекций</a>, ниже ссылки на отдельные трансляции авторов и тем.</p>
+  </div>
+  <div class="container" id="middle">
+   <div class="podcasts" id="authors">
+    <h2>Авторы</h2>
+    <ul>
+     {% for author in authors %}		
+     <li><a href="/author/{{author.id}}/rss.xml">{{author.name}}</a> / {{author.count}}</li>
+     {% endfor %}
+    </ul>
+   </div>
+   <div class="podcasts" id="themes">
+    <h2>Темы</h2>
+    <ul>
+     {% for theme in themes %}		
+     <li><a href="/theme/{{theme.id}}/rss.xml">{{theme.name}}</a> / {{theme.count}}</li>
+     {% endfor %}
+    </ul>
+   </div>
+  </div>
+  </div>
+  <div class="container" id="bottom">
+   <p>Права на все материалы принадлежат <a href="http://postnauka.ru">ИД &#171;ПостНаука&#187;</a>, мы только осуществляем техническую трансляцию ссылок.</p>
+   <p>Аве мне, <a href="mailto:bogdan.vasiliev@gmail.com">bogdan.vasiliev@gmail.com</a></p>
+  </div>
+{% endblock %}

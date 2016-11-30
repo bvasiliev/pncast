@@ -1,0 +1,3 @@
+videos = db.video.select().join(db.theme_to_video).where(db.theme_to_video.theme == 'brain').order_by(db.video.date.desc())
+
+videos = db.video.select().where(db.video.author == 'popov').order_by(db.video.date.desc())

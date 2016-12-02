@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
+from werkzeug.wrappers import Response
 from flask import Flask, redirect, render_template, make_response, abort
 from flask_cache import Cache
 from flask_compress import Compress
@@ -49,7 +50,8 @@ def index():
 	""" Main page """
 	authors = db.author.select().order_by(db.author.count.desc())
 	themes = db.theme.select().order_by(db.theme.count.desc())
-	return render_template('content.html', **locals())
+	page = render_template('content.html', **locals())
+	return make_response(page)
 
 
 @application.route('/audio/<video_id:video>.m4a')

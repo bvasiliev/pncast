@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from pncast import helper, youtube, logo, db, podcast, logger
+from pncast import helper, youtube, logo, db, podcast
 from flask import Flask, redirect, render_template, make_response, abort
 from flask.ext.cache import Cache
 from flask.ext.compress import Compress
@@ -19,7 +19,7 @@ Compress(app)
 app.jinja_env.globals.update(
         site_root = site_root)
 
-app.logger.addHandler(logger.handler)
+#app.logger.addHandler(logger.handler)
 
 app.url_map.converters['video_id'] = helper.video_converter
 app.url_map.converters['author_id'] = helper.author_converter
@@ -32,7 +32,7 @@ app.url_map.converters['theme_name'] = helper.theme_name_converter
 @app.errorhandler(Exception)
 def internal_server_error(error):
 	""" Handle & log app errors """
-	app.logger.error('Server Error: %s', (error))
+	#app.logger.error('Server Error: %s', (error))
 	return 'Something is wrong, we are working on it', 500
 
 

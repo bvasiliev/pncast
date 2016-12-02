@@ -1,0 +1,7 @@
+gunicorn
+Flask
+Flask-Cache
+Flask-Compress
+Werkzeug
+peewee
+PIL

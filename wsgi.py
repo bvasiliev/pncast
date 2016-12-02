@@ -7,32 +7,32 @@ from flask import Flask, redirect, render_template, make_response, abort
 from flask_cache import Cache
 from flask_compress import Compress
 
-app 		= Flask(__name__)
-cache 		= Cache(app, config={'CACHE_TYPE': 'simple'})
+application	= Flask(__name__)
+cache 		= Cache(application, config={'CACHE_TYPE': 'simple'})
 site_root 	= 'http://pncast.ru'
 cache_ttl 	= 3600
 youtube_ttl	= 21420
 feed_last_items = 100
 
-Compress(app)
+Compress(application)
 
-app.jinja_env.globals.update(
+application.jinja_env.globals.update(
         site_root = site_root)
 
-#app.logger.addHandler(logger.handler)
+#application.logger.addHandler(logger.handler)
 
-app.url_map.converters['video_id'] = helper.video_converter
-app.url_map.converters['author_id'] = helper.author_converter
-app.url_map.converters['theme_id'] = helper.theme_converter
-app.url_map.converters['author_name'] = helper.author_name_converter
-app.url_map.converters['theme_name'] = helper.theme_name_converter
+application.url_map.converters['video_id'] = helper.video_converter
+application.url_map.converters['author_id'] = helper.author_converter
+application.url_map.converters['theme_id'] = helper.theme_converter
+application.url_map.converters['author_name'] = helper.author_name_converter
+application.url_map.converters['theme_name'] = helper.theme_name_converter
 
 
-@app.errorhandler(500)
-@app.errorhandler(Exception)
+@application.errorhandler(500)
+@application.errorhandler(Exception)
 def internal_server_error(error):
-	""" Handle & log app errors """
-	#app.logger.error('Server Error: %s', (error))
+	""" Handle & log application errors """
+	#application.logger.error('Server Error: %s', (error))
 	return 'Something is wrong, we are working on it', 500
 
 
@@ -43,7 +43,7 @@ def make_response_rss(feed):
 	return result
 
 
-@app.route('/')
+@application.route('/')
 @cache.cached(timeout=cache_ttl)
 def index():
 	""" Main page """
@@ -52,7 +52,7 @@ def index():
 	return render_template('content.html', **locals())
 
 
-@app.route('/audio/<video_id:video>.m4a')
+@application.route('/audio/<video_id:video>.m4a')
 @cache.cached(timeout=youtube_ttl)
 def audio(video):
 	""" Redirects to youtube audio by postnauka video id  """
@@ -60,7 +60,7 @@ def audio(video):
 	return redirect(audio_url, 303)
 
 
-@app.route('/theme/<theme_id:theme>/rss.xml')
+@application.route('/theme/<theme_id:theme>/rss.xml')
 @cache.cached(timeout=cache_ttl)
 def theme(theme):
 	""" Theme feed """
@@ -68,7 +68,7 @@ def theme(theme):
 	return make_response_rss(feed_theme)
 	
 
-@app.route('/author/<author_id:author>/rss.xml')
+@application.route('/author/<author_id:author>/rss.xml')
 @cache.cached(timeout=cache_ttl)
 def author(author):
 	""" Author feed """
@@ -76,7 +76,7 @@ def author(author):
 	return make_response_rss(feed_author)
 
 
-@app.route('/last/rss.xml')
+@application.route('/last/rss.xml')
 @cache.cached(timeout=cache_ttl)
 def last():
 	""" Last items feed """
@@ -84,7 +84,7 @@ def last():
 	return make_response_rss(feed_last)
 
 
-@app.route('/logo/<string:table>/<string:item_id>.png') #FIXME
+@application.route('/logo/<string:table>/<string:item_id>.png') #FIXME
 @cache.cached(timeout=cache_ttl)
 def feed_logo(table, item_id):
 	""" Creates static feed img & redirects to """
@@ -95,7 +95,7 @@ def feed_logo(table, item_id):
 		abort(404)
 
 
-@app.route('/theme/<theme_name:theme>')
+@application.route('/theme/<theme_name:theme>')
 @cache.cached(timeout=cache_ttl)
 def theme_redirect(theme):
 	""" Redirects to theme feed by name, for front xls simplifying """
@@ -103,7 +103,7 @@ def theme_redirect(theme):
 	return redirect(theme_feed_url, 301)
 
 
-@app.route('/author/<author_name:author>')
+@application.route('/author/<author_name:author>')
 @cache.cached(timeout=cache_ttl)
 def author_redirect(author):
 	""" Redirects to author feed by name, for front xls simplifying """
@@ -112,4 +112,4 @@ def author_redirect(author):
 
 
 if __name__ == '__main__':
-	app.run()
+	application.run()

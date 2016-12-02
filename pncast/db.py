@@ -5,7 +5,7 @@ from peewee import *
 from playhouse.postgres_ext import *
 from os import environ as env
 
-postgres = PostgresqlExtDatabase(env['POSTGRESQL_DATABASE'], 
+postgres = PostgresqlExtDatabase('postnauka', 
 	user = env['POSTGRESQL_USER'],
 	password = env['POSTGRESQL_PASSWORD'],
 	host = env['POSTGRESQL_SERVICE_HOST'] 

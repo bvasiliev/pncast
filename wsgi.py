@@ -6,7 +6,7 @@ from pncast import helper, youtube, logo, db, podcast
 from werkzeug.wrappers import Response
 from flask import Flask, redirect, render_template, make_response, abort
 from flask_cache import Cache
-from flask_compress import Compress
+#from flask_compress import Compress
 
 application	= Flask(__name__)
 cache 		= Cache(application, config={'CACHE_TYPE': 'simple'})
@@ -15,7 +15,7 @@ cache_ttl 	= 3600
 youtube_ttl	= 21420
 feed_last_items = 100
 
-Compress(application)
+#Compress(application)
 
 application.jinja_env.globals.update(
         site_root = site_root)

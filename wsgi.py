@@ -33,7 +33,7 @@ application.url_map.converters['theme_name'] = helper.theme_name_converter
 def internal_server_error(error):
 	""" Handle & log application errors """
 	#application.logger.error('Server Error: %s', (error))
-	return 'Something is wrong, we are working on it', 500
+	return 'Something is wrong, we are working on it: %s' % error, 500
 
 
 def make_response_rss(feed):

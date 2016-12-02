@@ -4,5 +4,6 @@ Flask-Cache
 Flask-Compress
 Werkzeug
 peewee
+psycopg2
 Pillow
 youtube_dl

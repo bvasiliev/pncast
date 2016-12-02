@@ -41,7 +41,7 @@ class theme_converter(db_converter):
 			raise ValidationError()
 
 
-class author_by_name_converter(db_converter):
+class author_name_converter(db_converter):
 	""" Extract author object from DB by name """
 	regex = r'\w+' # re.UNICODE
 	def to_python(self, value):
@@ -51,7 +51,7 @@ class author_by_name_converter(db_converter):
 			raise ValidationError()
 
 
-class theme_by_name_converter(db_converter):
+class theme_name_converter(db_converter):
 	""" Extract theme object from DB by name """
 	regex = r'\w+' # re.UNICODE
 	def to_python(self, value):

@@ -53,7 +53,7 @@ def index():
 
 
 @app.route('/audio/<video_id:video>.m4a')
-@cache.cached(timeout=youtube_ttl) 
+@cache.cached(timeout=youtube_ttl)
 def audio(video):
 	""" Redirects to youtube audio by postnauka video id  """
 	audio_url = youtube.get_audio_url(video.youtube_url)

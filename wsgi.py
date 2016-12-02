@@ -4,8 +4,8 @@
 from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
 from flask import Flask, redirect, render_template, make_response, abort
-from flask.ext.cache import Cache
-from flask.ext.compress import Compress
+from flask_cache import Cache
+from flask_compress import Compress
 
 app 		= Flask(__name__)
 cache 		= Cache(app, config={'CACHE_TYPE': 'simple'})

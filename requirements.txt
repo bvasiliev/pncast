@@ -5,3 +5,4 @@ Flask-Compress
 Werkzeug
 peewee
 PIL
+youtube_dl

@@ -3,15 +3,13 @@
 
 from __future__ import unicode_literals
 from PIL import Image, ImageDraw, ImageFont
-import db #local
+from io import BytesIO
+import db
 import textwrap
 import re
-import os.path
 
-logo_folder 	= '/var/www/pn/static/logo/'
-url_path 	= '/static/logo/'
-font_file 	= '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf'
-logo_template 	= '/var/www/pn/templates/feed-temp.png'
+font_file 	= '../templates/DejaVuSans-Bold.ttf'
+logo_template 	= '../templates/feed-temp.png'
 W 		= 1400
 H 		= 1400
 max_font_size 	= 180
@@ -24,10 +22,11 @@ def get_text_width(text):
 	return text_width
 
 
-def create_image(message, filepath):
+def create_image(message):
 	backgroung = Image.open(logo_template)
 	draw = ImageDraw.Draw(backgroung)
-	
+	result = BytesIO()
+
 	text_width = get_text_width(message)
 	if text_width > normal_text_width:
 		font_size = max_font_size * normal_text_width / text_width
@@ -42,28 +41,9 @@ def create_image(message, filepath):
 		w, h = draw.textsize(row, font=font)
 		draw.text(((W - w) / 2, H_current ), row, font=font)
 		H_current = H_current + font_size
-	backgroung.save(filepath)
-
-
-def get_image_url(table, r_id):
-	filename = r_id + '.png'
-	filepath = logo_folder + filename
-	
-	if os.path.isfile(filepath):
-		return url_path + filename, False
-	
-	if table == 'author':
-		name = db.author.select(db.author.name).where(db.author.id == r_id).scalar()
-	elif table == 'theme':
-		name = db.theme.select(db.theme.name).where(db.theme.id == r_id).scalar()
-	else:
-		return None, False
-
-	if name:
-		create_image(name, filepath)
-		return  url_path + filename, True
-	else:
-		return None, False
+	backgroung.save(result, 'PNG')
+	result.seek(0)
+	return result
 
 
 if __name__ == '__main__':

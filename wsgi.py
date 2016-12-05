@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
-from flask import Flask, redirect, render_template, make_response, abort
+from flask import Flask, redirect, render_template, make_response, abort, send_file
 from flask_cache import Cache
 #from flask_compress import Compress
 
@@ -85,15 +85,13 @@ def last():
 	return make_response_rss(feed_last)
 
 
-@application.route('/logo/<string:table>/<string:item_id>.png') #FIXME
+@application.route('/logo/author/<author_id:item>.png')
+@application.route('/logo/theme/<theme_id:item>.png')
 @cache.cached(timeout=cache_ttl)
-def feed_logo(table, item_id):
-	""" Creates static feed img & redirects to """
-	logo_url, created = logo.get_image_url(table, item_id)
-	if logo_url: 
-		return redirect(logo_url, 301)
-	else:
-		abort(404)
+def feed_logo(item):
+	""" Feed logo """
+	feed_logo = logo.create_image(item.name)
+	return send_file(feed_logo, mimetype='image/png')
 
 
 @application.route('/theme/<theme_name:theme>')

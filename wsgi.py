@@ -65,7 +65,9 @@ def audio(video):
 @cache.cached(timeout=cache_ttl)
 def theme(theme):
 	""" Theme feed """
-	feed_theme = podcast.feed(theme_id=theme.id, title=theme.name)
+	items = db.select_video_by_theme(theme.id)
+	logo_url = '/logo/theme/%s.png' % theme.id
+	feed_theme = podcast.feed(items, title=theme.name, logo_url=logo_url)
 	return make_response_rss(feed_theme)
 	
 
@@ -73,7 +75,9 @@ def theme(theme):
 @cache.cached(timeout=cache_ttl)
 def author(author):
 	""" Author feed """
-	feed_author = podcast.feed(author_id=author.id, title=author.name)
+	items = db.select_video(db.video.author == author.id)
+	logo_url = '/logo/author/%s.png' % author.id
+	feed_author = podcast.feed(items, title=author.name, description=author.description, logo_url=logo_url)	
 	return make_response_rss(feed_author)
 
 
@@ -81,7 +85,8 @@ def author(author):
 @cache.cached(timeout=cache_ttl)
 def last():
 	""" Last items feed """
-	feed_last = podcast.feed(title='Последние лекции', limit=feed_last_items)
+	items = db.select_video().limit(feed_last_items)
+	feed_last = podcast.feed(items, title='Последние лекции')
 	return make_response_rss(feed_last)
 
 

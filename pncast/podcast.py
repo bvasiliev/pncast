@@ -7,6 +7,7 @@ import db
 
 class feed:
 	def __init__(self, items, title, description=None, logo_url=None):
+		self.items = items
 		self.date = self.items[0].date_rfc822
 		self.title = capitalize_first(title)
 		self.description = capitalize_first(description) or ''

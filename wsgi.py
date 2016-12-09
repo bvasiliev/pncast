@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
 from flask import Flask, redirect, render_template, make_response, send_file
 from flask_caching import Cache
-#from flask_compress import Compress
+from flask_compress import Compress
 import sys
 
 reload(sys) 
@@ -18,7 +18,7 @@ cache_ttl 	= 3600
 youtube_ttl	= 21420
 feed_last_items = 100
 
-#Compress(application)
+Compress(application)
 
 application.jinja_env.globals.update(site_root = site_root)
 application.jinja_env.filters['themes_flatten'] = helper.themes_flatten
@@ -59,7 +59,7 @@ def index():
 @application.route('/audio/<video_id:video>.m4a')
 @cache.cached(timeout=youtube_ttl)
 def audio(video):
-	""" Redirects to youtube audio by postnauka video id  """
+	""" Redirects to youtube audio by video id  """
 	audio_url = youtube.get_audio_url(video.youtube_url)
 	return redirect(audio_url, 303)
 

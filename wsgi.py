@@ -23,20 +23,9 @@ Compress(application)
 application.jinja_env.globals.update(site_root = site_root)
 application.jinja_env.filters['themes_flatten'] = helper.themes_flatten
 
-#application.logger.addHandler(logger.handler)
-
 application.url_map.converters['video_id'] = helper.video_converter
 application.url_map.converters['author_id'] = helper.author_converter
 application.url_map.converters['theme_id'] = helper.theme_converter
-
-'''
-@application.errorhandler(500)
-@application.errorhandler(Exception)
-def internal_server_error(error):
-	""" Handle & log application errors """
-	#application.logger.error('Server Error: %s', (error))
-	return 'Something is wrong, we are working on it: %s' % error, 500
-'''
 
 
 def make_response_rss(feed):

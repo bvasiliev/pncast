@@ -9,7 +9,7 @@ import db
 import textwrap
 import re
 
-workdir = getcwd()
+workdir = os.getcwd()
 
 font_file 	= '%s/templates/DejaVuSans-Bold.ttf' % workdir
 logo_template 	= '%s/templates/feed-temp.png' % workdir

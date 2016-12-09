@@ -2,7 +2,7 @@
 {% block items %}
 		{% for item in feed.items %}<item>
 			<title>{{item.subject}}</title>
-			<description><![CDATA[<p>{{item.description}}. </p><p>Темы: {{item.themes|join(', ')}}. </p><p>{{item.url|urlize}}</p>]]></description>
+			<description><![CDATA[<p>{{item.description}}. </p><p>Темы: {{item.themes|themes_flatten}}. </p><p>{{item.url|urlize}}</p>]]></description>
 			<itunes:summary>{{item.description}}</itunes:summary>
 			<itunes:subtitle>{{item.description}}</itunes:subtitle>
 			<itunes:author>{{item.author.name}}</itunes:author>
@@ -12,7 +12,7 @@
 			<link>{{item.url}}</link>
 			<itunes:duration>{{item.audio_duration_hms}}</itunes:duration>
 			<pubDate>{{item.date_rfc822}}</pubDate>
-			{% for theme_id, theme_name in item.themes.iteritems() %}<category id="{{theme_id}}">{{theme_name.decode('utf-8')}}</category>
+			{% for theme_id, theme_name in item.themes.iteritems() %}<category id="{{theme_id}}">{{theme_name}}</category>
 			{% endfor %}</item>
 		{% endfor %}
 {% endblock %}

@@ -33,3 +33,6 @@ class theme_converter(db_converter):
 	""" Extract theme object from DB """
 	regex = r'[a-zA-Z0-9-_]+'
 	table = db.theme
+
+def themes_flatten(themes_dict):
+	return ', '.join(val for (key, val) in themes_dict.iteritems())

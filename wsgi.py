@@ -6,6 +6,10 @@ from pncast import helper, youtube, logo, db, podcast
 from flask import Flask, redirect, render_template, make_response, send_file
 from flask_caching import Cache
 #from flask_compress import Compress
+import sys
+
+reload(sys) 
+sys.setdefaultencoding('utf-8')
 
 application	= Flask(__name__)
 cache 		= Cache(application, config={'CACHE_TYPE': 'simple'})
@@ -16,8 +20,8 @@ feed_last_items = 100
 
 #Compress(application)
 
-application.jinja_env.globals.update(
-        site_root = site_root)
+application.jinja_env.globals.update(site_root = site_root)
+application.jinja_env.filters['themes_flatten'] = helper.themes_flatten
 
 #application.logger.addHandler(logger.handler)
 
@@ -99,4 +103,4 @@ def feed_logo(item):
 
 
 if __name__ == '__main__':
-	application.run(debug=True)
+	application.run()

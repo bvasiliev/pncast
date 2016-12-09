@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
-from flask import Flask, redirect, render_template, make_response, abort, send_file
+from flask import Flask, redirect, render_template, make_response, send_file
 from flask_caching import Cache
 #from flask_compress import Compress
 

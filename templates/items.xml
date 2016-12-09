@@ -12,7 +12,7 @@
 			<link>{{item.url}}</link>
 			<itunes:duration>{{item.audio_duration_hms}}</itunes:duration>
 			<pubDate>{{item.date_rfc822}}</pubDate>
-			{% for theme in item.themes %}<category>{{theme}}</category>
-			{% endfor %}</item>
+{#			{% for theme_id, theme_name in item.themes.iteritems() %}<category id="{{theme_id}}">{{theme_name}}</category>#}
+{#			{% endfor %}</item>#}
 		{% endfor %}
 {% endblock %}

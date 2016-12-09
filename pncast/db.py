@@ -49,9 +49,11 @@ class video(psql):
 	audio_duration_hms = CharField(null=True)
 	audio_filesize 	= IntegerField(null=True)
 	youtube_thumbnail = TextField(null=True)
+	themes 		= HStoreField(null=True)
 
 	
 class theme_to_video(psql):
+	""" Legacy many2many ralations for DB without limits """
 	theme = ForeignKeyField(theme)
 	video = ForeignKeyField(video)
 	class Meta:
@@ -59,7 +61,7 @@ class theme_to_video(psql):
 
 
 def select_video(cause=None):
-	videos = (video.select(video, themes_names_subquery)
+	videos = (video.select()
 		.where(cause)
 		.order_by(video.date.desc(), video.id.desc())
 		)

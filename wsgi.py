@@ -65,7 +65,7 @@ def audio(video):
 @cache.cached(timeout=cache_ttl)
 def theme(theme):
 	""" Theme feed """
-	items = db.select_video_by_theme(theme.id)
+	items = db.select_video(db.video.themes.contains(theme.id))
 	logo_url = '/logo/theme/%s.png' % theme.id
 	feed_theme = podcast.feed(items, title=theme.name, logo_url=logo_url)
 	return make_response_rss(feed_theme)

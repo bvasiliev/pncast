@@ -4,12 +4,18 @@ from __future__ import unicode_literals
 from peewee import *
 from playhouse.postgres_ext import *
 from os import environ as env
+import urlparse
 
-postgres = PostgresqlExtDatabase('postnauka', 
-	user = env['POSTGRESQL_USER'],
-	password = env['POSTGRESQL_PASSWORD'],
-	host = env['POSTGRESQL_SERVICE_HOST'] 
-	)
+urlparse.uses_netloc.append('postgres')
+url = urlparse.urlparse(env['DATABASE_URL'])
+
+postgres = PostgresqlExtDatabase(
+		database=url.path[1:],
+		user=url.username,
+		password=url.password,
+		host=url.hostname,
+		port=url.port
+		)
 
 
 class psql(Model):

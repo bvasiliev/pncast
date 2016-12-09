@@ -4,13 +4,15 @@
 from __future__ import unicode_literals
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
-from os import environ as env
+import os
 import db
 import textwrap
 import re
 
-font_file 	= '%s/templates/DejaVuSans-Bold.ttf' % env['APP_ROOT']
-logo_template 	= '%s/templates/feed-temp.png' % env['APP_ROOT']
+workdir = getcwd()
+
+font_file 	= '%s/templates/DejaVuSans-Bold.ttf' % workdir
+logo_template 	= '%s/templates/feed-temp.png' % workdir
 W 		= 1400
 H 		= 1400
 max_font_size 	= 180

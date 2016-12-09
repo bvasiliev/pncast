@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 from pncast import helper, youtube, logo, db, podcast
 from flask import Flask, redirect, render_template, make_response, abort, send_file
-from flask_cache import Cache
+from flask_caching import Cache
 #from flask_compress import Compress
 
 application	= Flask(__name__)

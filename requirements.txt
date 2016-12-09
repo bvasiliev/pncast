@@ -1,6 +1,6 @@
 gunicorn
 Flask
-Flask-Cache
+Flask-Caching
 Flask-Compress
 Werkzeug
 peewee

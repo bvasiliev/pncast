@@ -62,28 +62,6 @@ class theme_to_video(psql):
 		primary_key = CompositeKey('theme', 'video')
 
 
-def select_video(cause=None):
-	videos = (video.select()
-		.where(cause)
-		.order_by(video.date.desc(), video.id.desc())
-		)
-	return videos
-
-
-def select_video_by_theme(theme_id):
-	""" Legacy select many2many relations """
-	theme_to_videos = (theme_to_video.select(video, themes_names_subquery)
-		.join(video)
-		.join(author)
-		.where(theme_to_video.theme == theme_id)
-		.order_by(video.date.desc(), video.id.desc())
-		)
-	videos = []
-        for item in theme_to_videos:
-        	item.video.themes = item.themes #SelectQuery objects mapping, not real data
-		videos.append(item.video)
-	return videos
-
 def get_or_update_author(author_id, name, description):
 	try:
 		result, created = author.get_or_create(id = author_id, name = name, description = description)
@@ -94,15 +72,6 @@ def get_or_update_author(author_id, name, description):
 		result.save()
 	return result
 	
-	
-themes_names_subquery = (fn.array(theme_to_video.select(theme.name)
-	.join(theme)
-	.where(video.id == theme_to_video.video)
-	.order_by(theme.count.desc())
-		)
-	.alias('themes')
-	)
-
 	
 if __name__ == '__main__':
 	pass

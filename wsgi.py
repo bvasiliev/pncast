@@ -24,9 +24,6 @@ application.jinja_env.globals.update(
 application.url_map.converters['video_id'] = helper.video_converter
 application.url_map.converters['author_id'] = helper.author_converter
 application.url_map.converters['theme_id'] = helper.theme_converter
-application.url_map.converters['author_name'] = helper.author_name_converter
-application.url_map.converters['theme_name'] = helper.theme_name_converter
-
 
 @application.errorhandler(500)
 @application.errorhandler(Exception)
@@ -34,7 +31,6 @@ def internal_server_error(error):
 	""" Handle & log application errors """
 	#application.logger.error('Server Error: %s', (error))
 	return 'Something is wrong, we are working on it: %s' % error, 500
-
 
 def make_response_rss(feed):
 	""" Render podcast feed """
@@ -99,21 +95,5 @@ def feed_logo(item):
 	return send_file(feed_logo, mimetype='image/png')
 
 
-@application.route('/theme/<theme_name:theme>')
-@cache.cached(timeout=cache_ttl)
-def theme_redirect(theme):
-	""" Redirects to theme feed by name, for front xls simplifying """
-	theme_feed_url = '/theme/%s/rss.xml' % theme.id
-	return redirect(theme_feed_url, 301)
-
-
-@application.route('/author/<author_name:author>')
-@cache.cached(timeout=cache_ttl)
-def author_redirect(author):
-	""" Redirects to author feed by name, for front xls simplifying """
-	author_feed_url = '/author/%s/rss.xml' % author.id
-	return redirect(author_feed_url, 301)
-
-
 if __name__ == '__main__':
-	application.run()
+	application.run(debug=True)

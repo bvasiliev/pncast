@@ -40,24 +40,3 @@ class theme_converter(db_converter):
 		except db.theme.DoesNotExist:
 			raise ValidationError()
 
-
-class author_name_converter(db_converter):
-	""" Extract author object from DB by name """
-	regex = r'\w+' # re.UNICODE
-	def to_python(self, value):
-		try:
-			return db.author.get(db.author.name == value)
-		except db.author.DoesNotExist:
-			raise ValidationError()
-
-
-class theme_name_converter(db_converter):
-	""" Extract theme object from DB by name """
-	regex = r'\w+' # re.UNICODE
-	def to_python(self, value):
-		try:
-			return db.theme.get(db.theme.name == value)
-		except db.theme.DoesNotExist:
-			raise ValidationError()
-
-

@@ -69,6 +69,7 @@ def select_video(cause=None):
 
 
 def select_video_by_theme(theme_id):
+	""" Legacy select many2many relations """
 	theme_to_videos = (theme_to_video.select(video, themes_names_subquery)
 		.join(video)
 		.join(author)

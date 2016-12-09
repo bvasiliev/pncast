@@ -52,7 +52,7 @@
                                         <xsl:variable name="postnaukalink" select="link"></xsl:variable>
 					<h3><a><xsl:attribute name="href"><xsl:value-of select="$postnaukalink"/></xsl:attribute><xsl:value-of select="title"/></a></h3>
 					<ul><xsl:for-each select="category">
-						<li><a><xsl:attribute name="href">/theme/<xsl:value-of select="text()"/></xsl:attribute><xsl:value-of select="text()"/></a></li>
+						<li><a><xsl:attribute name="href">/theme/<xsl:value-of select="@id"/>/rss.xml</xsl:attribute><xsl:value-of select="text()"/></a></li>
 					</xsl:for-each></ul>
 					<p><xsl:value-of select="itunes:summary"/>.</p>
 					<div class="feed-item-attachment">

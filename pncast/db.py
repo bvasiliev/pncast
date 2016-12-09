@@ -10,11 +10,11 @@ urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(env['DATABASE_URL'])
 
 postgres = PostgresqlExtDatabase(
-		database=url.path[1:],
-		user=url.username,
-		password=url.password,
-		host=url.hostname,
-		port=url.port
+		database = url.path[1:],
+		user = url.username,
+		password = url.password,
+		host = url.hostname,
+		port = url.port
 		)
 
 
@@ -50,8 +50,10 @@ class video(psql):
 	audio_filesize 	= IntegerField(null=True)
 	youtube_thumbnail = TextField(null=True)
 	themes 		= HStoreField(null=True)
+	class Meta:
+		order_by = ['-date', '-id']
 
-	
+
 class theme_to_video(psql):
 	""" Legacy many2many ralations for DB without limits """
 	theme = ForeignKeyField(theme)

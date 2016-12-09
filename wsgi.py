@@ -25,12 +25,15 @@ application.url_map.converters['video_id'] = helper.video_converter
 application.url_map.converters['author_id'] = helper.author_converter
 application.url_map.converters['theme_id'] = helper.theme_converter
 
+
 @application.errorhandler(500)
 @application.errorhandler(Exception)
 def internal_server_error(error):
 	""" Handle & log application errors """
 	#application.logger.error('Server Error: %s', (error))
 	return 'Something is wrong, we are working on it: %s' % error, 500
+
+
 
 def make_response_rss(feed):
 	""" Render podcast feed """
@@ -61,7 +64,7 @@ def audio(video):
 @cache.cached(timeout=cache_ttl)
 def theme(theme):
 	""" Theme feed """
-	items = db.select_video(db.video.themes.contains(theme.id))
+	items = db.video.select().where(db.video.themes.contains(theme.id))
 	logo_url = '/logo/theme/%s.png' % theme.id
 	feed_theme = podcast.feed(items, title=theme.name, logo_url=logo_url)
 	return make_response_rss(feed_theme)
@@ -71,7 +74,7 @@ def theme(theme):
 @cache.cached(timeout=cache_ttl)
 def author(author):
 	""" Author feed """
-	items = db.select_video(db.video.author == author.id)
+	items = db.video.select().where(db.video.author == author.id)
 	logo_url = '/logo/author/%s.png' % author.id
 	feed_author = podcast.feed(items, title=author.name, description=author.description, logo_url=logo_url)	
 	return make_response_rss(feed_author)
@@ -81,7 +84,7 @@ def author(author):
 @cache.cached(timeout=cache_ttl)
 def last():
 	""" Last items feed """
-	items = db.select_video().limit(feed_last_items)
+	items = db.video.select().limit(feed_last_items)
 	feed_last = podcast.feed(items, title='Последние лекции')
 	return make_response_rss(feed_last)
 

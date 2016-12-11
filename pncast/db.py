@@ -24,6 +24,7 @@ class psql(Model):
 	
 	
 class author(psql):
+	""" Authors - real table """
 	id 		= CharField(primary_key=True)
 	name 		= TextField(null=True)
 	description 	= TextField(null=True)
@@ -31,12 +32,14 @@ class author(psql):
 
 
 class theme(psql):
+	""" Themes - materialized view from video.themes """
 	id		= CharField(primary_key=True)
 	name		= TextField()
 	count		= IntegerField(default=1)
 
 
-class video(psql): 
+class video(psql):
+	""" Videos - real table """
 	author		= ForeignKeyField(author, null=True)
 	subject		= TextField()
 	description 	= TextField()

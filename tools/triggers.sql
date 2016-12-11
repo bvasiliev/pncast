@@ -14,19 +14,30 @@ FOR EACH ROW
 EXECUTE PROCEDURE update_theme_count ();
 
 
-
-CREATE OR REPLACE FUNCTION update_author_count() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION refresh_theme_author() RETURNS TRIGGER AS $$
 BEGIN
+ REFRESH MATERIALIZED VIEW theme;
  UPDATE author
  SET count = videos.count
  FROM (SELECT author_id, count(*) as count FROM video GROUP BY author_id) videos
  WHERE author.id = videos.author_id
  AND author.id = NEW.author_id;
-RETURN NEW;
+ RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION refresh_theme_view() RETURNS trigger AS
+$$
+BEGIN
+ REFRESH MATERIALIZED VIEW theme;
+ RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
+
 
 CREATE TRIGGER insert_video
 AFTER INSERT OR UPDATE ON video 
 FOR EACH ROW 
-EXECUTE PROCEDURE update_author_count ();
+EXECUTE PROCEDURE refresh_theme_author ();

@@ -13,16 +13,13 @@ sys.setdefaultencoding('utf-8')
 
 application	= Flask(__name__)
 cache 		= Cache(application, config={'CACHE_TYPE': 'simple'})
-site_root 	= 'http://pncast.ru'
 cache_ttl 	= 3600
 youtube_ttl	= 21420
 feed_last_items = 100
 
 Compress(application)
 
-application.jinja_env.globals.update(site_root = site_root)
 application.jinja_env.filters['themes_flatten'] = helper.themes_flatten
-
 application.url_map.converters['video_id'] = helper.video_converter
 application.url_map.converters['author_id'] = helper.author_converter
 application.url_map.converters['theme_id'] = helper.theme_converter

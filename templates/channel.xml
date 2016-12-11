@@ -8,7 +8,7 @@
 		<webMaster>bogdan.vasiliev@gmail.com</webMaster>
 		<managingEditor>postnauka@postnauka.ru</managingEditor>
 		<image>
-			<url>{{site_root + feed.logo_url}}</url>
+			<url>http://{{request.host + feed.logo_url}}</url>
 			<title>{{feed.title}} на ПостНауке</title>
 			<link>http://postnauka.ru</link>
 		</image>
@@ -19,8 +19,8 @@
 		<itunes:category text="Science &amp; Medicine">
 		</itunes:category>
 		<itunes:explicit>no</itunes:explicit>
-		<itunes:image href="{{site_root + feed.logo_url}}"/>
-		<atom:link href="{{site_root + request.path}}" rel="self" type="application/rss+xml"/>
+		<itunes:image href="http://{{request.host + feed.logo_url}}"/>
+		<atom:link href="{{request.url}}" rel="self" type="application/rss+xml"/>
 		<pubDate>{{feed.date}}</pubDate>
 		<title>{{feed.title}} на ПостНауке</title>
 		<itunes:author>ИД &#171;ПостНаука&#187;</itunes:author>

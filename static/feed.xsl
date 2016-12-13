@@ -2,7 +2,8 @@
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:atom="http://www.w3.org/2005/Atom"
-	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:pncast="http://pncast.ru/static/rss">
 <xsl:output method="html" doctype-system="about:legacy-compat" encoding="UTF-8" indent="yes"/>
 <xsl:template name="string-replace-all">
 	<xsl:param name="text"/>
@@ -51,7 +52,7 @@
 				<div class="feed-item">
                                         <xsl:variable name="postnaukalink" select="link"></xsl:variable>
 					<h3><a><xsl:attribute name="href"><xsl:value-of select="$postnaukalink"/></xsl:attribute><xsl:value-of select="title"/></a></h3>
-					<ul><xsl:for-each select="category">
+					<ul><xsl:for-each select="pncast:theme">
 						<li><a><xsl:attribute name="href">/theme/<xsl:value-of select="@id"/>/rss.xml</xsl:attribute><xsl:value-of select="text()"/></a></li>
 					</xsl:for-each></ul>
 					<p><xsl:value-of select="itunes:summary"/>.</p>

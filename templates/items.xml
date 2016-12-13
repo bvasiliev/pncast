@@ -8,7 +8,7 @@
 			<itunes:author>{{item.author.name}}</itunes:author>
 			<itunes:image href="{{item.youtube_thumbnail}}"/>
 			<enclosure url="http://{{request.host + item.audio_url}}" type="audio/mp4" length="{{item.audio_filesize}}"/>
-			<guid>{{item.url}}</guid>
+			<guid>http://{{request.host + item.audio_url}}</guid>
 			<link>{{item.url}}</link>
 			<itunes:duration>{{item.audio_duration_hms}}</itunes:duration>
 			<pubDate>{{item.date_rfc822}}</pubDate>

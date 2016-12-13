@@ -1,7 +1,8 @@
 #! /usr/bin/python
+# -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from dateparser import parse as dateparser
+from datetime import date
 from email.Utils import formatdate
 import requests
 import json
@@ -19,6 +20,20 @@ api_url = 'https://postnauka.ru/api/v1/posts'
 
 api_url_post_template = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,date,tagscloud'
 
+month_ru = { 
+	'января': 1,
+	'февраля': 2,
+	'марта': 3,
+	'апреля': 4,
+	'мая': 5,
+	'июня': 6,
+	'июля': 7,
+	'августа': 8,
+	'сентября': 9,
+	'октября': 10,
+	'ноября': 11,
+	'декабря': 12
+	}
 
 def site_request(url):
 	try:
@@ -49,9 +64,9 @@ def fetch_last_posts():
 
 
 def resolve_tags(tagscloud):
-	''' Resolv tags to themes '''
+	""" Resolv tags to themes """
 	if isinstance(tagscloud, dict):
-		''' api fuckup hack '''
+		""" api fuckup hack """
 		tags = []
 		for tag_id, tag in tagscloud.iteritems():
 			tags.append(tag)
@@ -64,7 +79,9 @@ def resolve_tags(tagscloud):
 
 
 def string_to_datetime(date_string):
-	return dateparser(date_string)
+	dd, month, yyyy = date_string.split()
+	mm = month_ru[month]
+	return date( year=int(yyyy), month=int(mm), day=int(dd) )
 
 
 def datetime_to_rfc822(date):

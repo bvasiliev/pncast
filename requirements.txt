@@ -7,3 +7,7 @@ peewee
 psycopg2
 Pillow
 youtube_dl
+dateparser
+email
+requests
+json

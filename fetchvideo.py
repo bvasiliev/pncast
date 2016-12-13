@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 from pncast import youtube, db, parser
 
+api_url_post_template = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,date,tagscloud'
 youtube_url_template = 'https://www.youtube.com/watch?v=%s'
 postnauka_url_template = 'http://postnauka.ru/video/%d'
 

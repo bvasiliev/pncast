@@ -65,17 +65,19 @@ def fetch_last_posts():
 
 def resolve_tags(tagscloud):
 	""" Resolv tags to themes """
+	themes = {}
 	if isinstance(tagscloud, dict):
 		""" api fuckup hack """
 		tags = []
 		for tag_id, tag in tagscloud.iteritems():
 			tags.append(tag)
-	else:
+	elif isinstance(tagscloud, list):
 		tags = tagscloud
-	result = {}
+	else:
+		return themes
 	for tag in tags:
-		result[tag['alias']] = tag['name']
-	return result
+		themes[tag['alias']] = tag['name']
+	return themes
 
 
 def string_to_datetime(date_string):

@@ -33,24 +33,15 @@ def get_audio_full_info(url):
 
 
 def get_audio_url(url):
-	with downloader:
-		result = downloader.extract_info(url)
-	audio_url = result['url']
-	return audio_url
+	return get_audio_full_info(url)['url']
 
 
 def get_audio_duration(url):
-	with downloader:
-		result = downloader.extract_info(url)
-	audio_duration = result['duration']
-	return audio_duration
+	return get_audio_full_info(url)['duration']
 
 
 def get_audio_filesize(url):
-	with downloader:
-		result = downloader.extract_info(url)
-	audio_filesize = result['filesize']
-	return audio_filesize
+	return get_audio_full_info(url)['filesize']
 
 
 if __name__ == '__main__':

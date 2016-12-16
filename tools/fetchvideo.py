@@ -6,10 +6,6 @@ from pncast import youtube, db, parser
 
 
 def fetch_video(video_id):
-	video = db.video.select().where(db.video.id == video_id)
-	if video.exists():
-		return None
-
 	video_info = parser.fetch_video_info(video_id)
 	if not video_info: 
 		return None
@@ -67,9 +63,11 @@ def get_audio_size_directly(url):
 
 def fetch_new_items():
 	feed = parser.fetch_last_posts()
+	existing_videos = [video.id for video in db.video.select(db.video.id)]
 	for item in feed:
 		if item['type'] == 'video':
-			fetch_video(int(item['id']))
+			item_id = int(item['id'])
+			if item_id not in existing_videos: fetch_video(item_id)
 
 	
 if __name__ == '__main__':

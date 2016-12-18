@@ -7,7 +7,7 @@ from os import environ as env
 import urlparse
 from playhouse.postgres_ext import PostgresqlExtDatabase, HStoreField
 from peewee import Model, IntegerField, TextField, CharField, DateTimeField, \
-                   ForeignKeyField
+                   ForeignKeyField, coerce_to_unicode
 
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(env['DATABASE_URL'])
@@ -23,6 +23,15 @@ class Psql(Model):
             host=url.hostname,
             port=url.port
             )
+
+
+class HStoreFieldUnicode(HStoreField):
+    """ Adopts peewee HStoreField to store non-ascii values """
+    def coerce(self, field):
+        if isinstance(field, dict):
+            for key, value in field.iteritems():
+                field[key] = coerce_to_unicode(value)
+        return field
 
 
 class author(Psql):
@@ -54,7 +63,7 @@ class video(Psql):
     audio_duration_hms = CharField(null=True)
     audio_filesize = IntegerField(null=True)
     youtube_thumbnail = TextField(null=True)
-    themes = HStoreField(null=True)
+    themes = HStoreFieldUnicode(null=True)
     class Meta(object):
         order_by = ['-date', '-id']
 

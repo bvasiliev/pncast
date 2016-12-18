@@ -39,4 +39,4 @@ class ThemeConverter(DBConverter):
 
 def themes_flatten(themes_dict):
     """ Returns comma separated themes string from video.themes dict values """
-    return ', '.join(val.decode('utf-8') for (key, val) in themes_dict.iteritems())
+    return ', '.join(val for (key, val) in themes_dict.iteritems())

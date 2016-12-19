@@ -35,8 +35,3 @@ class ThemeConverter(DBConverter):
     """ Extract theme object from DB """
     regex = r'[a-zA-Z0-9-_]+'
     table = db.theme
-
-
-def themes_flatten(themes_dict):
-    """ Returns comma separated themes string from video.themes dict values """
-    return ', '.join(themes_dict.values())

@@ -2,7 +2,7 @@
 {% block items %}
     {% for item in feed.items %}<item>
       <title>{{item.subject}}</title>
-      <description><![CDATA[<p>{{item.description}}. </p><p>Темы: {{item.themes|themes_flatten}}. </p><p>{{item.url|urlize}}</p>]]></description>
+      <description><![CDATA[<p>{{item.description}}. </p><p>Темы: {{item.themes.values()|join(', ')}}. </p><p>{{item.url|urlize}}</p>]]></description>
       <itunes:summary>{{item.description}}</itunes:summary>
       <itunes:subtitle>{{item.description}}</itunes:subtitle>
       <itunes:author>{{item.author.name}}</itunes:author>

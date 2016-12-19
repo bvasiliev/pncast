@@ -19,7 +19,6 @@ CACHE_TTL = 3600
 YOUTUBE_TTL = 21420
 FEED_LIMIT = 100
 
-app.jinja_env.filters['themes_flatten'] = helper.themes_flatten
 app.url_map.converters['video_id'] = helper.VideoConverter
 app.url_map.converters['author_id'] = helper.AuthorConverter
 app.url_map.converters['theme_id'] = helper.ThemeConverter

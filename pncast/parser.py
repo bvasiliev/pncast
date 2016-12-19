@@ -77,9 +77,7 @@ def resolve_tags(tagscloud):
     """ Resolv api tags to themes dict {id: name} """
     themes = {}
     if isinstance(tagscloud, dict):
-        tags = []
-        for tag_id, tag in tagscloud.iteritems():
-            tags.append(tag)
+        tags = tagscloud.values()
     elif isinstance(tagscloud, list):
         tags = tagscloud
     else:

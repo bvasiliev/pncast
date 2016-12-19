@@ -21,12 +21,11 @@ class Psql(Model):
             user=url.username,
             password=url.password,
             host=url.hostname,
-            port=url.port
-            )
+            port=url.port)
 
 
 class HStoreFieldUnicode(HStoreField):
-    """ Adopts peewee HStoreField to store non-ascii values """
+    """ Adapts peewee HStoreField to store non-ascii values """
     def coerce(self, field):
         if isinstance(field, dict):
             for key, value in field.iteritems():

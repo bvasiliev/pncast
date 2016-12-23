@@ -1,8 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-
-
 from __future__ import unicode_literals
 import pncast.youtube as youtube
 import pncast.db as db
@@ -68,7 +66,10 @@ def get_audio_size_directly(url):
 def fetch_new_items():
     """ Fetch new items from site """
     feed = parser.fetch_last_posts()
-    existing_videos = [video.id for video in db.video.select(db.video.id)]
+    existing_videos = (db.video.select(db.fn.array_agg(db.video.id))
+                       .order_by()
+                       .scalar()
+                       )
     for item in feed:
         if item['type'] == 'video':
             item_id = int(item['id'])

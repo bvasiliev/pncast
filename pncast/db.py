@@ -7,7 +7,7 @@ from os import environ as env
 import urlparse
 from playhouse.postgres_ext import PostgresqlExtDatabase, HStoreField
 from peewee import Model, IntegerField, TextField, CharField, DateTimeField, \
-                   ForeignKeyField, coerce_to_unicode
+                   ForeignKeyField, coerce_to_unicode, fn
 
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(env['DATABASE_URL'])
@@ -63,8 +63,8 @@ class video(Psql):
     audio_filesize = IntegerField(null=True)
     youtube_thumbnail = TextField(null=True)
     themes = HStoreFieldUnicode(null=True)
-    class Meta(object):
-        order_by = ['-date', '-id']
+    #class Meta(object):
+    #    order_by = ['-date', '-id']
 
 
 def get_or_update_author(author_id, name, description):

@@ -63,8 +63,8 @@ class video(Psql):
     audio_filesize = IntegerField(null=True)
     youtube_thumbnail = TextField(null=True)
     themes = HStoreFieldUnicode(null=True)
-    #class Meta(object):
-    #    order_by = ['-date', '-id']
+    class Meta(object):
+        order_by = ['-date', '-id']
 
 
 def get_or_update_author(author_id, name, description):

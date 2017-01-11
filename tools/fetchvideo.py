@@ -69,7 +69,7 @@ def fetch_new_items():
     existing_videos = (db.video.select(db.fn.array_agg(db.video.id))
                        .order_by()
                        .scalar()
-                       )
+                      )
     for item in feed:
         if item['type'] == 'video':
             item_id = int(item['id'])

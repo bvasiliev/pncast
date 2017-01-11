@@ -7,7 +7,7 @@ from os import environ as env
 import urlparse
 from playhouse.postgres_ext import PostgresqlExtDatabase, HStoreField
 from peewee import Model, IntegerField, TextField, CharField, DateTimeField, \
-                   ForeignKeyField, coerce_to_unicode, fn
+                   ForeignKeyField, coerce_to_unicode, fn, IntegrityError
 
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(env['DATABASE_URL'])

@@ -23,6 +23,7 @@ API_URL = 'https://postnauka.ru/api/v1/posts'
 
 API_URL_POST_TEMPLATE = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,date,tagscloud'
 YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'
+YOUTUBE_THUMBNAIL_URL_TEMPLATE = 'https://i.ytimg.com/vi/%s/maxresdefault.jpg'
 POSTNAUKA_URL_TEMPLATE = 'http://postnauka.ru/video/%d'
 
 MONTH_RU = {

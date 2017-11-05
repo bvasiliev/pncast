@@ -24,7 +24,7 @@ def fetch_video(video_id):
     audio_duration = audio_info['duration']
     audio_duration_hms = parser.duration_to_hms(audio_duration)
     audio_filesize = audio_info['filesize'] or get_audio_size_directly(youtube_url)
-    youtube_thumbnail = audio_info['thumbnail'],
+    youtube_thumbnail = parser.YOUTUBE_THUMBNAIL_URL_TEMPLATE % audio_info['display_id'],
 
     author_info = video_info['authors'][0]
     author_id = author_info['author_link'].split('/')[2]

@@ -3,9 +3,9 @@
     {% for item in feed.items %}<item>
       <title>{{item.subject}}</title>
       <description><![CDATA[{% set author_href = "<a href=\"https://pncast.ru/author/%s/rss.xml\">%s<a/>" % (item.author.id, item.author.name) %}
-<div class="descr">{{ item.description|replace(item.author.name, author_href)|safe }}.</div>
-<div class="themes"><ul>{% for theme_id, theme_name in item.themes.iteritems() %}<li><a href={{ "https://pncast.ru/theme/%s/rss.xml" % theme_id }}>{{theme_name}}</a></li>{% endfor %}</ul></div>
-<div class="src">Подробнее: {{item.url|urlize}}</div>]]>
+<p>{{ item.description|replace(item.author.name, author_href)|safe }}.</p>
+<ul>{% for theme_id, theme_name in item.themes.iteritems() %}<li><a href={{ "https://pncast.ru/theme/%s/rss.xml" % theme_id }}>{{theme_name}}</a></li>{% endfor %}</ul>
+<p>Подробнее: {{item.url|urlize}}</p>]]>
       </description>
       <itunes:summary>{{item.description}}</itunes:summary>
       <itunes:subtitle>{{item.description}}</itunes:subtitle>

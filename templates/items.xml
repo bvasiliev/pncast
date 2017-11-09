@@ -2,7 +2,11 @@
 {% block items %}
     {% for item in feed.items %}<item>
       <title>{{item.subject}}</title>
-      <description><![CDATA[<p>{{item.description}}. </p><p>Темы: {{item.themes.values()|join(', ')}}. </p><p>{{item.url|urlize}}</p>]]></description>
+      <description><![CDATA[{% set author_href = "<a href=\"https://pncast.ru/author/%s/rss.xml\">%s<a/>" % (item.author.id, item.author.name) %}
+<div class="descr">{{ item.description|replace(item.author.name, author_href)|safe }}.</div>
+<div class="themes"><ul class="themes">{% for theme_id, theme_name in item.themes.iteritems() %}<li><a href={{ "https://pncast.ru/theme/%s/rss.xml" % theme_id }}>{{theme_name}}</a></li>{% endfor %}</ul></div>
+<div class="src">Подробнее: {{item.url|urlize}}</div>]]>
+      </description>
       <itunes:summary>{{item.description}}</itunes:summary>
       <itunes:subtitle>{{item.description}}</itunes:subtitle>
       <itunes:author>{{item.author.name}}</itunes:author>

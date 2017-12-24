@@ -5,7 +5,7 @@
 
 from __future__ import unicode_literals
 import json
-from datetime import date
+from datetime import date, datetime
 import requests
 from email.Utils import formatdate
 
@@ -25,21 +25,6 @@ API_URL_POST_TEMPLATE = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,dat
 YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'
 YOUTUBE_THUMBNAIL_URL_TEMPLATE = 'https://i.ytimg.com/vi/%s/maxresdefault.jpg'
 POSTNAUKA_URL_TEMPLATE = 'http://postnauka.ru/video/%d'
-
-MONTH_RU = {
-    'января': 1,
-    'февраля': 2,
-    'марта': 3,
-    'апреля': 4,
-    'мая': 5,
-    'июня': 6,
-    'июля': 7,
-    'августа': 8,
-    'сентября': 9,
-    'октября': 10,
-    'ноября': 11,
-    'декабря': 12
-    }
 
 
 def site_request(url):
@@ -89,10 +74,8 @@ def resolve_tags(tagscloud):
 
 
 def string_to_datetime(date_string):
-    """ Return datetime from russian string """
-    dd, month, yyyy = date_string.split()
-    mm = MONTH_RU[month]
-    return date(year=int(yyyy), month=int(mm), day=int(dd))
+    """ Return datetime from string """
+    return datetime.strptime(date_string, '%d %B %Y')
 
 
 def datetime_to_rfc822(date_obj):

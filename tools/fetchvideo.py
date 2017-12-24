@@ -39,7 +39,7 @@ def fetch_video(video_id):
         theme_name = video_info['tags']['rus']
         themes[theme_id] = theme_name
 
-    video, result = db.video.create_or_get(id=video_id, \
+    video, result = db.video.get_or_create(id=video_id, \
         author=author.id, \
         subject=subject, \
         description=description, \

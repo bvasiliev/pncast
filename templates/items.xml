@@ -2,7 +2,7 @@
 {% block items %}
     {% for item in feed.items %}<item>
       <title>{{item.subject}}</title>
-      <description>{{item.description_rtf}}</description>
+      <description>{{item.description_rtf|safe}}</description>
       <itunes:summary>{{item.description}}</itunes:summary>
       <itunes:subtitle>{{item.description}}</itunes:subtitle>
       <itunes:author>{{item.author.name}}</itunes:author>

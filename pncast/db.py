@@ -53,6 +53,7 @@ class video(Psql):
     author = ForeignKeyField(author, null=True)
     subject = TextField()
     description = TextField()
+    description_rtf = TextField()
     date = DateTimeField()
     date_rfc822 = CharField()
     url = TextField()

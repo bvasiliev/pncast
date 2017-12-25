@@ -8,9 +8,14 @@ import json
 from datetime import date, datetime
 import requests
 from email.Utils import formatdate
+from jinja2 import Environment, FileSystemLoader
 
 
 session = requests.Session()
+
+JINJA = Environment(loader=FileSystemLoader('templates'))
+TEMPLATE_RTF = JINJA.get_template('description.xml')
+
 
 HTTP_HEADERS = {'Accept-Encoding': 'gzip, deflate, sdch',
                 'Accept-Language': 'ru,en-US;q=0.8,en;q=0.6',
@@ -19,7 +24,7 @@ HTTP_HEADERS = {'Accept-Encoding': 'gzip, deflate, sdch',
                 'User-Agent': 'pncast.ru',
                 'Proxy-Connection': 'keep-alive'}
 
-API_URL = 'https://postnauka.ru/api/v1/posts'
+API_URL = 'https://postnauka.ru/api/v1/posts?term=video'
 
 API_URL_POST_TEMPLATE = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,date,tagscloud'
 YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'
@@ -92,6 +97,10 @@ def duration_to_hms(duration):
     else:
         return "%d:%02d:%02d" % (hours, mins, seconds)
 
+
+def redner_description_rtf(author, description, themes, url):
+    return TEMPLATE_RTF.render(**locals())
+   
 
 if __name__ == '__main__':
     pass

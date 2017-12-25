@@ -69,7 +69,7 @@ def resolve_tags(tagscloud):
     else:
         return themes
     for tag in tags:
-        themes[tag['alias']] = tag['name']
+        if tag['alias'] is not 'video': themes[tag['alias']] = tag['name']
     return themes
 
 

@@ -24,7 +24,7 @@ HTTP_HEADERS = {'Accept-Encoding': 'gzip, deflate, sdch',
                 'User-Agent': 'pncast.ru',
                 'Proxy-Connection': 'keep-alive'}
 
-API_URL = 'https://postnauka.ru/api/v1/posts?term=video'
+API_URL = 'https://postnauka.ru/api/v1/posts'
 
 API_URL_POST_TEMPLATE = 'https://postnauka.ru/api/v1/posts/%d?expand=youtube,date,tagscloud'
 YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'

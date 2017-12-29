@@ -1,4 +1,4 @@
-<![CDATA[{% set author_href = "<a href=\"https://pncast.ru/author/%s/rss.xml\">%s<a/>" % (author.id, author.name) %}
+<![CDATA[{% set author_href = "<a href=\"https://pncast.ru/author/%s/rss.xml\">%s</a>" % (author.id, author.name) %}
 <p>{{ description|replace(author.name, author_href)|safe }}.</p>
 <ul>{% for theme_id, theme_name in themes.iteritems() %}<li><a href="{{ "https://pncast.ru/theme/%s/rss.xml" % theme_id }}">{{theme_name}}</a></li>{% endfor %}</ul>
 <p>Подробнее: {{url|urlize}}</p>]]>

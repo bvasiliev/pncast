@@ -31,7 +31,7 @@ YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'
 YOUTUBE_THUMBNAIL_URL_TEMPLATE = 'https://i.ytimg.com/vi/%s/maxresdefault.jpg'
 POSTNAUKA_URL_TEMPLATE = 'http://postnauka.ru/video/%d'
 
-THEME_BLACKLIST = ['video']
+THEME_BLACKLIST = ['video', 'video-2']
 
 
 def site_request(url):

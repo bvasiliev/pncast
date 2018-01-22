@@ -2,12 +2,14 @@
 {% block items %}
     {% for item in feed.items %}<item>
       <title>{{item.subject}}</title>
-      <description>{{item.description_rtf|safe}}</description>
+      <description><![CDATA[{% set author_href = "<a href=\"https://pncast.ru/author/%s/rss.xml\">%s</a>" % (item.author.id, item.author.name) %}<p>{{ item.description|replace(item.author.name, author_href)|safe }}.</p>
+<ul>{% for theme_id, theme_name in item.themes.iteritems() %}<li><a href="{{ "https://pncast.ru/theme/%s/rss.xml" % theme_id }}">{{theme_name}}</a></li>{% endfor %}</ul>
+<p>Подробнее: {{item.url|urlize}}</p>]]></description>
       <itunes:summary>{{item.description}}</itunes:summary>
       <itunes:subtitle>{{item.description}}</itunes:subtitle>
       <itunes:author>{{item.author.name}}</itunes:author>
       <itunes:image href="{{item.youtube_thumbnail}}"/>
-      <enclosure url="http://{{request.host + item.audio_url}}" type="audio/mp4" length="{{item.audio_filesize}}"/>
+      <enclosure url="https://{{request.host + item.audio_url}}" type="audio/mp4" length="{{item.audio_filesize}}"/>
       <guid>http://{{request.host + item.audio_url}}</guid>
       <link>{{item.url}}</link>
       <itunes:duration>{{item.audio_duration_hms}}</itunes:duration>

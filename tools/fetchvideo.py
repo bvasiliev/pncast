@@ -35,8 +35,6 @@ def fetch_video(video_id):
 
     themes = parser.resolve_tags(video_info['tagscloud'])
 
-    description_rtf = parser.redner_description_rtf(author, description, themes, url)
-
     if  video_info['tags']:
         theme_id = video_info['tags']['eng']
         theme_name = video_info['tags']['rus']
@@ -46,7 +44,6 @@ def fetch_video(video_id):
         author=author.id, \
         subject=subject, \
         description=description, \
-        description_rtf=description_rtf, \
         date=date, \
         date_rfc822=date_rfc822, \
         url=url, \

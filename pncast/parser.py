@@ -31,6 +31,8 @@ YOUTUBE_URL_TEMPLATE = 'https://www.youtube.com/watch?v=%s'
 YOUTUBE_THUMBNAIL_URL_TEMPLATE = 'https://i.ytimg.com/vi/%s/maxresdefault.jpg'
 POSTNAUKA_URL_TEMPLATE = 'http://postnauka.ru/video/%d'
 
+THEME_BLACKLIST = ['video']
+
 
 def site_request(url):
     """ Return content from http url"""
@@ -74,7 +76,7 @@ def resolve_tags(tagscloud):
     else:
         return themes
     for tag in tags:
-        if tag['alias'] is not 'video': themes[tag['alias']] = tag['name']
+        if tag['alias'] not in THEME_BLACKLIST: themes[tag['alias']] = tag['name']
     return themes
 
 

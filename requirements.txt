@@ -3,9 +3,8 @@ Flask
 Flask-Caching
 Flask-Compress
 Werkzeug
-peewee==2.10.2
+peewee
 psycopg2-binary
 Pillow
-youtube_dl
 email
 requests

@@ -7,4 +7,5 @@ peewee
 psycopg2-binary
 Pillow
 email
+youtube_dl
 requests

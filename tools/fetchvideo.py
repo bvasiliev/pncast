@@ -15,7 +15,7 @@ def fetch_video(video_id):
 
     audio_url = '/audio/%d.m4a' % video_id
     subject = video_info['title']
-    description = video_info['description']
+    description = video_info['description'].strip()
     date = parser.string_to_datetime(video_info['date'])
     date_rfc822 = parser.datetime_to_rfc822(date)
     url = parser.POSTNAUKA_URL_TEMPLATE % video_id
@@ -29,7 +29,7 @@ def fetch_video(video_id):
     author_info = video_info['authors'][0]
     author_id = author_info['author_link'].split('/')[2]
     author_name = author_info['author_name']
-    author_desc = author_info['author_description']
+    author_desc = author_info['author_description'].strip()
 
     author = db.get_or_update_author(author_id, author_name, author_desc)
 

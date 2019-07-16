@@ -9,7 +9,7 @@ from flask import Flask, redirect, render_template, make_response, send_file, \
 from flask_caching import Cache
 from flask_compress import Compress
 from pncast import helper, youtube, logo, db, podcast
-from re import sub
+
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
@@ -44,10 +44,8 @@ def index():
 @app.route('/audio/<video_id:request_video>.m4a')
 @cache.cached(timeout=YOUTUBE_TTL)
 def audio(request_video):
-    """ Redirects to youtube audio by video id with server ip masquerade """
-    client_addr = '&ip=%s' % request.remote_addr
-    server_audio_url = youtube.get_audio_url(request_video.youtube_url)
-    audio_url = sub(helper.IP_PATTERN, client_addr, server_audio_url)
+    """ Redirects to youtube audio by video id  """
+    audio_url = youtube.get_audio_url(request_video.youtube_url)
     return redirect(audio_url, 303)
 
 

@@ -5,10 +5,8 @@
 
 from __future__ import unicode_literals
 from werkzeug.routing import BaseConverter, ValidationError
-from re import compile
 import pncast.db as db
 
-IP_PATTERN = compile('&ip=((?:[0-9]{1,3}\.){3}[0-9]{1,3})')
 
 class DBConverter(BaseConverter):
     """ Base url to DB converner """

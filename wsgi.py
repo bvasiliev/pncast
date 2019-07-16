@@ -12,8 +12,8 @@ from pncast import helper, youtube, logo, db, podcast
 
 
 app = Flask(__name__)
-cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
-local_cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+redis_cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)
 
 CACHE_TTL = 3600
@@ -43,7 +43,7 @@ def index():
 
 
 @app.route('/audio/<video_id:request_video>.m4a')
-@cache.cached(timeout=YOUTUBE_TTL)
+@redis_cache.cached(timeout=YOUTUBE_TTL)
 def audio(request_video):
     """ Redirects to youtube audio by video id  """
     audio_url = youtube.get_audio_url(request_video.youtube_url)
@@ -84,7 +84,7 @@ def last():
 
 @app.route('/logo/author/<author_id:item>.png')
 @app.route('/logo/theme/<theme_id:item>.png')
-@local_cache.cached(timeout=CACHE_TTL)
+@cache.cached(timeout=CACHE_TTL)
 def feed_logo(item):
     """ Feed logo """
     item_logo = logo.create_image(item.name)

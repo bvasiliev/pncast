@@ -12,7 +12,7 @@ from pncast import helper, youtube, logo, db, podcast
 
 
 app = Flask(__name__)
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
 Compress(app)
 
 CACHE_TTL = 3600

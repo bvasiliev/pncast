@@ -3,6 +3,7 @@
 """ Youtube iteration """
 
 from __future__ import unicode_literals
+from time import sleep
 import youtube_dl
 
 
@@ -30,6 +31,7 @@ downloader = youtube_dl.YoutubeDL(YOUTUBE_OPTIONS)
 
 def get_audio_full_info(url):
     """ Return video info dict from youtube url """
+    sleep(1.5) #FIXME hack for supress 429 from youtube
     with downloader:
         result = downloader.extract_info(url)
     return result

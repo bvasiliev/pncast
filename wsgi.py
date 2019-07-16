@@ -13,6 +13,7 @@ from pncast import helper, youtube, logo, db, podcast
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
+local_cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)
 
 CACHE_TTL = 3600
@@ -83,7 +84,7 @@ def last():
 
 @app.route('/logo/author/<author_id:item>.png')
 @app.route('/logo/theme/<theme_id:item>.png')
-@cache.cached(timeout=CACHE_TTL)
+@local_cache.cached(timeout=CACHE_TTL)
 def feed_logo(item):
     """ Feed logo """
     item_logo = logo.create_image(item.name)

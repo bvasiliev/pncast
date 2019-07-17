@@ -19,7 +19,7 @@ CACHE_TTL = getenv('CACHE_TTL', 3600)
 YOUTUBE_TTL = getenv('YOUTUBE_TTL', 21420)
 YOUTUBE_REQUESTS_LIMIT = getenv('YOUTUBE_REQUESTS_LIMIT', '12/hour, 3/minute')
 SITE_REQUESTS_LIMIT = getenv('SITE_REQUESTS_LIMIT', '2000/day')
-FEED_LENGTH = getenv('FEED_LENGTH', 100)
+FEED_LENGTH = int(getenv('FEED_LENGTH', 100))
 
 
 app = Flask(__name__)

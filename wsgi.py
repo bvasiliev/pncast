@@ -19,11 +19,12 @@ CACHE_TTL = int(getenv('CACHE_TTL', 3600))
 YOUTUBE_TTL = int(getenv('YOUTUBE_TTL', 21420))
 YOUTUBE_REQUESTS_LIMIT = getenv('YOUTUBE_REQUESTS_LIMIT', '12/hour, 3/minute')
 SITE_REQUESTS_LIMIT = getenv('SITE_REQUESTS_LIMIT', '2000/day')
+PROXIES_NUM = int(getenv('PROXIES_NUM', 2))
 FEED_LENGTH = int(getenv('FEED_LENGTH', 100))
 
 
 app = Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=2)
+app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies = PROXIES_NUM)
 redis_cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)

@@ -15,8 +15,8 @@ from werkzeug.contrib.fixers import ProxyFix
 from pncast import helper, youtube, logo, db, podcast
 
 
-CACHE_TTL = getenv('CACHE_TTL', 3600)
-YOUTUBE_TTL = getenv('YOUTUBE_TTL', 21420)
+CACHE_TTL = int(getenv('CACHE_TTL', 3600))
+YOUTUBE_TTL = int(getenv('YOUTUBE_TTL', 21420))
 YOUTUBE_REQUESTS_LIMIT = getenv('YOUTUBE_REQUESTS_LIMIT', '12/hour, 3/minute')
 SITE_REQUESTS_LIMIT = getenv('SITE_REQUESTS_LIMIT', '2000/day')
 FEED_LENGTH = int(getenv('FEED_LENGTH', 100))

@@ -23,7 +23,7 @@ FEED_LENGTH = getenv('FEED_LENGTH', 100)
 
 
 app = Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=2)
 redis_cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)

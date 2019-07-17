@@ -10,3 +10,4 @@ email
 youtube_dl==2019.7.16
 requests
 redis
+flask-limiter

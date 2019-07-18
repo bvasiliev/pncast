@@ -7,8 +7,8 @@ from __future__ import unicode_literals
 import json
 from datetime import date, datetime
 import requests
+from re import compile as re_compile
 from email.Utils import formatdate
-
 
 session = requests.Session()
 
@@ -29,6 +29,7 @@ POSTNAUKA_URL_TEMPLATE = 'http://postnauka.ru/video/%d'
 
 THEME_BLACKLIST = ['video', 'video-2']
 
+YOUTUBE_RE = re_compile('(?:(?:https?\:\/\/)?(?:www\.)?(?:youtube|youtu)(?:(?:\.com|\.be)\/)(?:embed\/)?(?:watch\?)?(?:feature=player_embedded)?&?(?:v=)?([0-z]{11}|[0-z]{4}(\-|\_)[0-z]{4}|.(\-|\_)[0-z]{9}))')
 
 def site_request(url):
     """ Return content from http url"""
@@ -94,6 +95,14 @@ def duration_to_hms(duration):
         return "%02d:%02d" % (mins, seconds)
     else:
         return "%d:%02d:%02d" % (hours, mins, seconds)
+
+
+def find_youtube_id_on_page(url):
+    """ Find youtube video ID in given page """
+    text = site_request(url)
+    result = YOUTUBE_RE.findall(text)[0]
+    print result
+    return ''.join(result)
 
 
 if __name__ == '__main__':

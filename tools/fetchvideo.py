@@ -6,7 +6,6 @@ import pncast.youtube as youtube
 import pncast.db as db
 import pncast.parser as parser
 
-
 def fetch_video(video_id):
     """ Fetch video info from api by id and save to DB """
     video_info = parser.fetch_video_info(video_id)
@@ -19,7 +18,8 @@ def fetch_video(video_id):
     date = parser.string_to_datetime(video_info['date'])
     date_rfc822 = parser.datetime_to_rfc822(date)
     url = parser.POSTNAUKA_URL_TEMPLATE % video_id
-    youtube_url = parser.YOUTUBE_URL_TEMPLATE % video_info['youtube']
+    youtube_id = video_info.get('youtube') or parser.find_youtube_id_on_page(url)
+    youtube_url = parser.YOUTUBE_URL_TEMPLATE % youtube_id
     audio_info = youtube.get_audio_full_info(youtube_url)
     audio_duration = audio_info['duration']
     audio_duration_hms = parser.duration_to_hms(audio_duration)

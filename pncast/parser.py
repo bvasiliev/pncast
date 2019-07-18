@@ -101,7 +101,6 @@ def find_youtube_id_on_page(url):
     """ Find youtube video ID in given page """
     text = site_request(url)
     result = YOUTUBE_RE.findall(text)[0]
-    print result
     return ''.join(result)
 
 

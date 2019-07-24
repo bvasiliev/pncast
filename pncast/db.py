@@ -7,7 +7,7 @@ from os import environ as env
 import urlparse
 from playhouse.postgres_ext import PostgresqlExtDatabase, HStoreField
 from peewee import Model, IntegerField, TextField, CharField, DateTimeField, \
-                   ForeignKeyField, fn, IntegrityError
+                   ForeignKeyField, coerce_to_unicode, fn, IntegrityError
 
 redis_url = env['REDIS_URL']
 urlparse.uses_netloc.append('postgres')
@@ -22,8 +22,7 @@ class Psql(Model):
             user=url.username,
             password=url.password,
             host=url.hostname,
-            port=url.port,
-            register_hstore=True)
+            port=url.port)
 
 
 class HStoreFieldUnicode(HStoreField):
@@ -31,10 +30,7 @@ class HStoreFieldUnicode(HStoreField):
     def coerce(self, field):
         if isinstance(field, dict):
             for key, value in field.iteritems():
-                if isinstance(value, unicode):
-                    field[key] = value
-                elif isinstance(value, basestring):
-                    field[key] = value.decode('utf-8')
+                field[key] = coerce_to_unicode(value)
         return field
 
 

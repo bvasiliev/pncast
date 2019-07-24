@@ -3,7 +3,7 @@ Flask
 Flask-Caching
 Flask-Compress
 Werkzeug
-peewee==2.10.2
+peewee==3.9.6
 psycopg2-binary
 Pillow
 email

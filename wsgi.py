@@ -32,7 +32,8 @@ limiter = Limiter(
     app,
     key_func = get_remote_address,
     default_limits = [SITE_REQUESTS_LIMIT],
-    storage_uri = db.redis_url
+    storage_uri = db.redis_url,
+    headers_enabled = True
 )
 
 app.url_map.converters['video_id'] = helper.VideoConverter

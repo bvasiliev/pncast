@@ -70,16 +70,11 @@ class video(Psql):
 
 def get_or_update_author(author_id, name, description):
     """ Get or create author record, update if changed """
-    try:
-        result, created = author.get_or_create(id=author_id,
-                                               name=name,
-                                               description=description)
-    except IntegrityError:
-        result = author.get(author.id == author_id)
-        result.name = name
-        result.description = description
-        result.save()
-    return result
+    item, created = author.get_or_create(id=author_id)
+    item.name = name
+    item.description = description
+    item.save()
+    return item
 
 
 if __name__ == '__main__':

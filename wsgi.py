@@ -6,18 +6,35 @@
 from __future__ import unicode_literals
 from flask import Flask, redirect, render_template, make_response, send_file, \
                   request, send_from_directory
+from os import getenv
 from flask_caching import Cache
 from flask_compress import Compress
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from werkzeug.contrib.fixers import ProxyFix
 from pncast import helper, youtube, logo, db, podcast
 
 
+CACHE_TTL = int(getenv('CACHE_TTL', 3600))
+YOUTUBE_TTL = int(getenv('YOUTUBE_TTL', 21420))
+YOUTUBE_REQUESTS_LIMIT = getenv('YOUTUBE_REQUESTS_LIMIT', '12/hour, 3/minute')
+SITE_REQUESTS_LIMIT = getenv('SITE_REQUESTS_LIMIT', '2000/day')
+PROXIES_NUM = int(getenv('PROXIES_NUM', 2))
+FEED_LENGTH = int(getenv('FEED_LENGTH', 100))
+
+
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=PROXIES_NUM)
+redis_cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': db.redis_url})
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 Compress(app)
-
-CACHE_TTL = 3600
-YOUTUBE_TTL = 21420
-FEED_LIMIT = 100
+limiter = Limiter(
+    app,
+    key_func = get_remote_address,
+    default_limits = [SITE_REQUESTS_LIMIT],
+    storage_uri = db.redis_url,
+    headers_enabled = True
+)
 
 app.url_map.converters['video_id'] = helper.VideoConverter
 app.url_map.converters['author_id'] = helper.AuthorConverter
@@ -42,7 +59,8 @@ def index():
 
 
 @app.route('/audio/<video_id:request_video>.m4a')
-@cache.cached(timeout=YOUTUBE_TTL)
+@redis_cache.cached(timeout=YOUTUBE_TTL)
+@limiter.limit(YOUTUBE_REQUESTS_LIMIT)
 def audio(request_video):
     """ Redirects to youtube audio by video id  """
     audio_url = youtube.get_audio_url(request_video.youtube_url)
@@ -76,7 +94,7 @@ def author(request_author):
 @cache.cached(timeout=CACHE_TTL)
 def last():
     """ Last items feed """
-    items = db.video.select().limit(FEED_LIMIT)
+    items = db.video.select().limit(FEED_LENGTH)
     last_feed = podcast.Feed(items, title='Последние лекции')
     return make_response_rss(last_feed)
 

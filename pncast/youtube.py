@@ -18,7 +18,7 @@ class YoutubeLogger(object):
 
 YOUTUBE_OPTIONS = {
     'format': '140',
-    'simulate': False,
+    'simulate': True,
     'quiet': True,
     'socket-timeout': 5,
     'logger': YoutubeLogger(),

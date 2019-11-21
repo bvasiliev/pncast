@@ -9,6 +9,7 @@ from playhouse.postgres_ext import PostgresqlExtDatabase, HStoreField
 from peewee import Model, IntegerField, TextField, CharField, DateTimeField, \
                    ForeignKeyField, coerce_to_unicode, fn, IntegrityError
 
+redis_url = env['REDIS_URL']
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(env['DATABASE_URL'])
 
